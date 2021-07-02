@@ -3,6 +3,7 @@ package ru.netology.nmedia.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -23,6 +24,7 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 @ExperimentalCoroutinesApi
 class FeedFragment : Fragment() {
     private val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
+    private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -98,15 +100,29 @@ class FeedFragment : Fragment() {
             scrollToTop = true
         }
 
-     //   binding.list.set
-
         binding.swiperefresh.setOnRefreshListener {
             viewModel.refreshPosts()
         }
 
-        binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+        authViewModel.data.observe(viewLifecycleOwner){
+            if (it.id != 0L) {
+                binding.fab.setOnClickListener {
+                    findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+                }
+            } else {
+                binding.fab.setOnClickListener {
+                    Snackbar.make(
+                        binding.fab,
+                        "Authentication required",
+                        Snackbar.LENGTH_SHORT
+                    ).setAction("Login") {
+                        findNavController().navigate(R.id.action_feedFragment_to_signInFragment)
+                    }.show()
+                }
+           }
         }
+
+
 
         return binding.root
     }

@@ -36,19 +36,11 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.signin -> {
-                /*menu?.let {
-                    it.setGroupVisible(R.id.unauthenticated, false)
-                    it.setGroupVisible(R.id.authenticated,   false)
-                }*/
                 findNavController(R.id.nav_host_fragment).
                 navigate(R.id.action_feedFragment_to_signInFragment)
                 true
             }
             R.id.signup -> {
-                /*menu?.let {
-                    it.setGroupVisible(R.id.unauthenticated, false)
-                    it.setGroupVisible(R.id.authenticated,   false)
-                }*/
                 findNavController(R.id.nav_host_fragment).
                 navigate(R.id.action_feedFragment_to_signOutFragment)
                 true
