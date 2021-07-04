@@ -23,7 +23,7 @@ data class PostEntity(
     var attachment: AttachmentEmbeddable?,
 ) {
     fun toDto() = Post(
-        id,
+        id = id,
         authorId,
         author,
         authorAvatar,

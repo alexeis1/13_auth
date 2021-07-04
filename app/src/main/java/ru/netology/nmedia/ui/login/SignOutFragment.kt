@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.github.dhaval2404.imagepicker.constant.ImageProvider
 import com.google.android.material.snackbar.Snackbar
@@ -39,7 +40,7 @@ class SignOutFragment : Fragment() {
             if (!hasFocus && binding.confirmPassword.text.isNotBlank() &&
                 binding.confirmPassword.text.toString() != binding.password.text.toString()
             ) {
-                Snackbar.make(binding.root, "Password and confirm password does not match",
+                Snackbar.make(binding.root, getString(R.string.pass_not_match),
                     Snackbar.LENGTH_LONG)
                     .show()
             }
@@ -76,7 +77,9 @@ class SignOutFragment : Fragment() {
                     }
                     Activity.RESULT_OK -> {
                         viewModel.changePhoto(it.data?.data)
-
+                        Glide.with(binding.imageView)
+                            .load(it.data?.data).placeholder(R.drawable.ic_baseline_add_a_photo_48)
+                            .centerCrop().into(binding.imageView)
                     }
                 }
             }
@@ -107,7 +110,7 @@ class SignOutFragment : Fragment() {
             if (it.error){
                 Snackbar.make(
                     binding.root,
-                    "Register Error",
+                    getString(R.string.register_Error),
                     Snackbar.LENGTH_LONG
                 ).show()
             } else if (!it.isRegistering){

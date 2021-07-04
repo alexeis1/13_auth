@@ -21,7 +21,6 @@ private val logging = HttpLoggingInterceptor().apply {
 }
 
 private val okhttp = OkHttpClient.Builder()
-    .addInterceptor(logging)
     .addInterceptor { chain ->
         AppAuth.getInstance().authStateFlow.value.token?.let { token ->
             val newRequest = chain.request().newBuilder()
@@ -31,6 +30,7 @@ private val okhttp = OkHttpClient.Builder()
         }
         chain.proceed(chain.request())
     }
+    .addInterceptor(logging)
     .build()
 
 private val retrofit = Retrofit.Builder()

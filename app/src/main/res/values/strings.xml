@@ -30,8 +30,14 @@
     <string name="sign_out">Sign Out</string>
     <string name="new_posts">New Posts %1$d</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in_short">sign in</string>
     <string name="login">Login</string>
     <string name="username">Username</string>
+    <string name="register">Register</string>
+    <string name="upload_avatar">Upload Avatar</string>
+    <string name="authentication_required">Authentication required</string>
+    <string name="register_Error">Register Error</string>
+    <string name="pass_not_match">Password and confirm password does not match</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="name">Name</string>
     <!-- Strings related to login -->
 </resources>

@@ -33,13 +33,16 @@ class FeedFragment : Fragment() {
     ): View {
         val binding = FragmentFeedBinding.inflate(inflater, container, false)
 
+        var likeFun : (post: Post)->Unit = { post: Post-> viewModel.likeById(post.id)}
+
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
             }
 
             override fun onLike(post: Post) {
-                viewModel.likeById(post.id)
+                likeFun(post)
+                //viewModel.likeById(post.id)
             }
 
             override fun onRemove(post: Post) {
@@ -57,7 +60,7 @@ class FeedFragment : Fragment() {
                     Intent.createChooser(intent, getString(R.string.chooser_share_post))
                 startActivity(shareIntent)
             }
-        })
+        }, authViewModel)
         binding.list.adapter = adapter
         viewModel.dataState.observe(viewLifecycleOwner) { state ->
             binding.progress.isVisible = state.loading
@@ -109,20 +112,21 @@ class FeedFragment : Fragment() {
                 binding.fab.setOnClickListener {
                     findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
                 }
+                likeFun = { post: Post-> viewModel.likeById(post.id)}
             } else {
-                binding.fab.setOnClickListener {
+                 val queryRegistration = {_:View?->
                     Snackbar.make(
                         binding.fab,
-                        "Authentication required",
+                        getString(R.string.authentication_required),
                         Snackbar.LENGTH_SHORT
-                    ).setAction("Login") {
+                    ).setAction(getString(R.string.login),) {
                         findNavController().navigate(R.id.action_feedFragment_to_signInFragment)
                     }.show()
                 }
+                binding.fab.setOnClickListener(queryRegistration)
+                likeFun = {_->queryRegistration(null)}
            }
         }
-
-
 
         return binding.root
     }

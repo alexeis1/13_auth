@@ -30,4 +30,14 @@
     <string name="sign_up">Регистрация</string>
     <string name="sign_out">Выход</string>
     <string name="new_posts">Свежие записи %1$d</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="login">Логин</string>
+    <string name="username">Имя</string>
+    <string name="register">Регистрация</string>
+    <string name="upload_avatar">Загрузить Аватар</string>
+    <string name="authentication_required">Необходимо залогинится</string>
+    <string name="register_Error">Ошибка регистрации</string>
+    <string name="pass_not_match">Пароль и подтверждение пароля не совпадают</string>
+    <string name="confirm_password">Подтверждение пароля</string>
+    <string name="name">Имя</string>
 </resources>

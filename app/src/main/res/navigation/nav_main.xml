@@ -36,5 +36,9 @@
     <fragment
         android:id="@+id/signInFragment"
         android:name="ru.netology.nmedia.ui.login.SignInFragment"
-        android:label="SignInFragment" />
+        android:label="SignInFragment" >
+        <action
+            android:id="@+id/action_signInFragment_to_signOutFragment"
+            app:destination="@id/signOutFragment" />
+    </fragment>
 </navigation>

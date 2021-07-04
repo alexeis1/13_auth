@@ -1,14 +1,16 @@
 package ru.netology.nmedia.activity
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
+import android.app.Dialog
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.messaging.FirebaseMessaging
@@ -17,6 +19,7 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.viewmodel.AuthViewModel
+
 
 @ExperimentalCoroutinesApi
 class AppActivity : AppCompatActivity(R.layout.activity_app) {
@@ -46,8 +49,19 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                 true
             }
             R.id.signout -> {
-                // TODO: just hardcode it, implementation must be in homework
-                AppAuth.getInstance().removeAuth()
+                AlertDialog.Builder(this)
+                    .setTitle("Program")
+                    .setMessage("Are you sure you want to log out?")
+                    .setPositiveButton(
+                        "Logout"
+                    ) { dialog, id -> // Закрываем окно
+                        AppAuth.getInstance().removeAuth()
+                        dialog.dismiss()
+                    }.setNegativeButton(
+                        "Cancel"
+                    ) { dialog, id -> // Закрываем окно
+                        dialog.cancel()
+                    }.show()
                 true
             }
             else -> super.onOptionsItemSelected(item)

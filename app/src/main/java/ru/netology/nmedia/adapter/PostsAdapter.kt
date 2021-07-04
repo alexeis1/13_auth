@@ -12,6 +12,7 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.view.loadCircleCrop
+import ru.netology.nmedia.viewmodel.AuthViewModel
 
 interface OnInteractionListener {
     fun onLike(post: Post) {}
@@ -22,10 +23,11 @@ interface OnInteractionListener {
 
 class PostsAdapter(
     private val onInteractionListener: OnInteractionListener,
+    private val authViewModel: AuthViewModel
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding, onInteractionListener)
+        return PostViewHolder(binding, onInteractionListener, authViewModel)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -37,6 +39,7 @@ class PostsAdapter(
 class PostViewHolder(
     private val binding: CardPostBinding,
     private val onInteractionListener: OnInteractionListener,
+    private val authViewModel: AuthViewModel
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) {
@@ -45,6 +48,7 @@ class PostViewHolder(
             published.text = post.published.toString()
             content.text = post.content
             avatar.loadCircleCrop("${BuildConfig.BASE_URL}/avatars/${post.authorAvatar}")
+            like.isCheckable = authViewModel.authenticated
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
 
